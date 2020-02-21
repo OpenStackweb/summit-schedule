@@ -1,0 +1,9 @@
+.env
+.editorconfig
+dist
+.idea
+.editorconfig
+node_modules
+.env.dev
+.DS_Store
+/.env.staging
