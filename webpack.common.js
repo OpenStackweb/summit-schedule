@@ -4,13 +4,15 @@ const Dotenv                    = require('dotenv-webpack');
 const MiniCssExtractPlugin      = require("mini-css-extract-plugin");
 
 module.exports = {
-    entry: "./src/index.js",
+    entry: "./schedule-app.js",
+    output: {
+        library: 'summit-schedule',
+        libraryTarget: 'umd',
+        filename: 'schedule.js',
+        auxiliaryComment: 'Test Comment'
+    },
     plugins: [
         new CleanWebpackPlugin(),
-        new HtmlWebpackPlugin({
-            title: 'Summit Schedule',
-            template: './src/index.ejs'
-        }),
         new Dotenv()
     ],
     node: {fs: 'empty'},

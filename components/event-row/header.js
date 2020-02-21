@@ -5,8 +5,6 @@ import {epochToMomentTimeZone} from 'openstack-uicore-foundation/lib/methods';
 const EventHeader = ({
     event,
     summit,
-    bulkSyncToggleEvent,
-    syncEventsToCalendar,
 }) => {
 
     const getSearchLink = term => {

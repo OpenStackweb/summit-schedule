@@ -1,7 +1,5 @@
-import moment from "moment-timezone";
 import { epochToMomentTimeZone, epochToMoment } from "openstack-uicore-foundation/lib/methods";
-//import { FragmentParser } from "openstack-uicore-foundation/lib/components";
-import FragmentParser from "../../../utils/fragmen-parser";
+import { FragmentParser } from "openstack-uicore-foundation/lib/components";
 
 const fragmentParser = new FragmentParser();
 

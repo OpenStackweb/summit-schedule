@@ -2,10 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from "react-redux";
 import NoMatchPage from './no-match-page';
-import {RawHTML} from 'openstack-uicore-foundation/lib/components';
+import {RawHTML, RsvpForm} from 'openstack-uicore-foundation/lib/components';
 import T from "i18n-react";
 import {getEvent, rsvpEvent} from "../actions";
-import RsvpForm from "../../forms/rsvp-form";
 
 import '../styles/event-rsvp.less';
 

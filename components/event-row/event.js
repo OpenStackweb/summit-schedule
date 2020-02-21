@@ -5,9 +5,7 @@ import { connect } from 'react-redux';
 import {
     addEventToSchedule,
     addEventToFavorites,
-    bulkSyncToggleEvent,
     unRsvpEvent,
-    syncEventsToCalendar,
     removeEventFromSchedule,
     removeEventFromFavorites
 } from '../../actions'
@@ -36,9 +34,7 @@ class Event extends Component {
             loggedUser,
             addEventToSchedule,
             addEventToFavorites,
-            bulkSyncToggleEvent,
             unRsvpEvent,
-            syncEventsToCalendar,
             removeEventFromSchedule,
             removeEventFromFavorites,
             history
@@ -57,8 +53,6 @@ class Event extends Component {
                     <EventHeader
                         event={event}
                         summit={summit}
-                        bulkSyncToggleEvent={bulkSyncToggleEvent}
-                        syncEventsToCalendar={syncEventsToCalendar}
                     />
                     <div className="event-state col-sm-1 col-xs-1">
                         {going && !filters.favorites &&
@@ -114,9 +108,7 @@ function mapStateToProps(scheduleState) {
 export default connect(mapStateToProps, {
     addEventToSchedule,
     addEventToFavorites,
-    bulkSyncToggleEvent,
     unRsvpEvent,
-    syncEventsToCalendar,
     removeEventFromSchedule,
     removeEventFromFavorites,
 })(Event)

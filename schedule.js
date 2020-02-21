@@ -24,7 +24,6 @@ import {
     getAllEvents,
     changeView,
     loadFilters,
-    autoloadEvent,
     getEvent
 } from './actions'
 
@@ -34,7 +33,7 @@ import FullSchedulePage from "./pages/full-schedule";
 import EventDetailPage from "./pages/event-detail";
 import EventRsvpPage from "./pages/event-rsvp";
 import SpeakerProfilePage from "./pages/speaker-profile";
-import NoMatchPage from "../../pages/no-match-page";
+import NoMatchPage from "./pages/no-match-page";
 
 import {AjaxLoader} from "openstack-uicore-foundation/lib/components";
 import 'awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css'
@@ -99,6 +98,5 @@ export default connect(mapStateToProps, {
     getAllEvents,
     getEvent,
     changeView,
-    loadFilters,
-    autoloadEvent,
+    loadFilters
 })(Schedule)

@@ -1,4 +1,7 @@
 import moment from 'moment';
+import Filter from './tools/filter';
+import {getSummitDates} from './tools/utils';
+import {epochToMomentTimeZone} from "openstack-uicore-foundation/lib/methods";
 
 import {
     START_SCHED_LOADING,
@@ -14,21 +17,12 @@ import {
     SET_FILTERS,
     RESET_FILTERS,
     SET_SEARCH,
-    UPDATE_EVENT,
-    TOGGLE_FILTERS,
-    UNSYNC_CALENDAR,
-    CALENDAR_SYNCD,
-    RECEIVE_EVENTS_FULL,
     ADDED_TO_SCHEDULE,
     REMOVED_FROM_SCHEDULE,
     ADDED_TO_FAVORITES,
     REMOVED_FROM_FAVORITES,
     SUBMITTED_NEW_COMMENT
 } from './actions';
-
-import Filter from './tools/filter';
-import {getSummitDates} from './tools/utils';
-import {epochToMomentTimeZone} from "openstack-uicore-foundation/lib/methods";
 
 const DEFAULT_FILTERS = {
     going: false,
@@ -227,71 +221,9 @@ const ScheduleReducer = (state = DEFAULT_STATE, action) => {
             return {...state, eventDetail: {...state.eventDetail, public_comments}};
         }
         break;
-
-
-
-        case UPDATE_EVENT: {
-            var {eventId, mutator} = payload;
-
-            // Replace old event.
-            var events = updateEvent(eventId, mutator, state.events)
-
-            // Get the new list of filtered events.
-            var filtered = Filter.events(state.filters, events, state.loggedUser);
-
-            // Remove any bulk event that could be now filtered.
-            var bulk = state.bulk.filter(eventId => {
-                return filtered.indexOf(eventId) < 0
-            })
-
-            return {...state, events, filtered, bulk}
-        }
-
-
-
-        case UNSYNC_CALENDAR:
-            return { ...state,
-                filters: { ...state.filters,
-                    calsync: false
-                }
-            }
-
-        case CALENDAR_SYNCD:
-            window.location = state.summit.schedule_link;
-            break;
     }
 
     return state
 }
-
-// Helper functions.
-const updateEvent = (eventId, mutator, events) => {
-    return events.map(event => {
-        return event.id == eventId ? mutator(event) : event
-    })
-}
-
-const getAllowedTracks = (filters, summit) => {
-    let tracks = []
-
-    // Empty filter value means *show all* groups.
-    const selectedGroups = filters.track_groups
-        ? filters.track_groups
-        : Object.keys(summit.track_groups)
-
-    // Extract allowed tracks from each selected group.
-    selectedGroups.forEach(groupId => {
-        const categoryGroup = summit.track_groups[groupId]
-        tracks = categoryGroup ? tracks.concat(categoryGroup.tracks) : tracks;
-    });
-
-    return tracks
-};
-
-const getVisibleEvents = state => {
-    return state.events.filter(event => {
-        return state.filtered.indexOf(event.id) < 0
-    })
-};
 
 export default ScheduleReducer

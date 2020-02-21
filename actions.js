@@ -26,6 +26,7 @@ export const RECEIVE_ALL_EVENTS         = 'RECEIVE_ALL_EVENTS';
 export const RECEIVE_EVENT_DETAIL       = 'RECEIVE_EVENT_DETAIL';
 export const RECEIVE_SPEAKER_DETAIL     = 'RECEIVE_SPEAKER_DETAIL';
 export const SET_VIEW                   = 'SET_VIEW';
+export const TOGGLE_FILTERS             = 'TOGGLE_FILTERS';
 export const RESET_FILTERS              = 'RESET_FILTERS';
 export const SET_FILTERS                = 'SET_FILTERS';
 export const SET_SEARCH                 = 'SET_SEARCH';

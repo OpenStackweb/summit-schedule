@@ -11,7 +11,6 @@ import {
 
 import EventFilters from './event-filters';
 import ViewFilters from './view-filters';
-import SyncModal from './sync_modal';
 import ShareableLinkModal from './shareable_link_modal';
 
 const CALENDAR_NO_EVENTS_MSG = 'You must select at least one event!';
