@@ -2,20 +2,28 @@ const HtmlWebpackPlugin         = require('html-webpack-plugin');
 const { CleanWebpackPlugin }    = require('clean-webpack-plugin');
 const Dotenv                    = require('dotenv-webpack');
 const MiniCssExtractPlugin      = require("mini-css-extract-plugin");
+const path                      = require('path');
+const nodeExternals             = require('webpack-node-externals');
+
+
 
 module.exports = {
-    entry: "./schedule-app.js",
+    entry: {schedule: "./schedule-app.js"},
     output: {
-        library: 'summit-schedule',
+        path: path.resolve(__dirname, 'lib'),
+        filename: '[name].js',
+        library: 'summit-schedule-app',
         libraryTarget: 'umd',
-        filename: 'schedule.js',
-        auxiliaryComment: 'Test Comment'
+        umdNamedDefine: true
     },
+    node: {fs: 'empty'},
     plugins: [
         new CleanWebpackPlugin(),
-        new Dotenv()
+        new Dotenv(),
+        new MiniCssExtractPlugin({
+            filename: 'css/[name].css',
+        }),
     ],
-    node: {fs: 'empty'},
     module: {
         rules: [
             {
@@ -71,4 +79,6 @@ module.exports = {
             }
         ]
     },
+    target: 'node',
+    externals: [nodeExternals()]
 };

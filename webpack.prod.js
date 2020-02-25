@@ -8,24 +8,10 @@ const path                      = require('path');
 
 module.exports = merge(common, {
     mode: 'production',
-    output: {
-        filename: '[name]_[hash].js',
-        path: path.resolve(__dirname, 'dist'),
-        publicPath: '/',
-        pathinfo: false
-    },
     optimization: {
         minimizer: [
             new TerserJSPlugin({terserOptions: {compress: {inline: false}}}),
             new OptimizeCSSAssetsPlugin({})
         ],
-        splitChunks: {
-            chunks: 'all'
-        }
-    },
-    plugins: [
-        new MiniCssExtractPlugin({
-            filename: '[name].[hash].css',
-        }),
-    ]
+    }
 });
