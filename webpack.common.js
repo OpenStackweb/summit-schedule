@@ -8,7 +8,7 @@ const nodeExternals             = require('webpack-node-externals');
 
 
 module.exports = {
-    entry: {schedule: "./schedule-app.js"},
+    entry: {schedule: "./src/schedule-app.js"},
     output: {
         path: path.resolve(__dirname, 'lib'),
         filename: '[name].js',
