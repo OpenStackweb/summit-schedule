@@ -1,0 +1,24 @@
+@import "colors.scss";
+
+.speaker-mini-box {
+  padding-top: 20px;
+  padding-bottom: 20px;
+
+  .result-speaker-name-div {
+    margin-top: 24px;
+    padding-left: 5px;
+  }
+
+  .speaker-position-row {
+    color: $dark-grey;
+    font-size: 12px;
+  }
+
+  .big-profile-pic {
+    width: 100px;
+    height: 100px;
+    background-color: white;
+  }
+
+}
+

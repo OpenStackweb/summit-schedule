@@ -1,0 +1,28 @@
+.search-results-page {
+  min-height: 400px;
+
+  .no-results {
+    text-align: center;
+  }
+
+  .col-level-title {
+    height: 10px;
+
+    span {
+      position: relative;
+      top: -12px;
+    }
+  }
+
+  .speaker-list-wrapper {
+    background-color: #EEEEEE;
+    border-top: 1px solid #C2C2C2;
+    border-bottom: 1px solid #C2C2C2;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    width: 100vw;
+    position: relative;
+    margin-left: -50vw;
+    left: 50%;
+  }
+}

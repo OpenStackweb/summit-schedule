@@ -1,8 +1,21 @@
+/**
+ * Copyright 2020 OpenStack Foundation
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ **/
+
 import { epochToMomentTimeZone, epochToMoment } from "openstack-uicore-foundation/lib/methods";
 import { FragmentParser } from "openstack-uicore-foundation/lib/components";
+import Swal from "sweetalert2";
 
 const fragmentParser = new FragmentParser();
-
 
 export const getSummitDates = (summit) => {
     let {start_date, end_date, time_zone_id} = summit;
@@ -38,7 +51,7 @@ export const setUrlParam = (name, value) => {
 
 export const getUrlParams = () => {
     return fragmentParser.getParams();
-}
+};
 
 export const setUrlParams = (params, exclude = []) => {
     Object.keys(params).forEach(param => {
@@ -62,4 +75,18 @@ export const clearUrlParams = (params = null) => {
 
 export const getEventSlug = (event) => {
     return event.title.replace(/[^A-Z0-9]+/ig, "_");
-}
+};
+
+export const loginAlert = (loginUrl) => {
+    Swal.fire({
+        title: 'Login Required',
+        text: "You need to log in to proceed with this action.",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Log in'
+    }).then(() => {
+        window.location = `${loginUrl}?BackURL=${window.location.href}`;
+    });
+};

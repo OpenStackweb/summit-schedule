@@ -14,7 +14,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {Route, Switch} from "react-router-dom";
-import MetaTags from 'react-meta-tags';
+import {AjaxLoader} from "openstack-uicore-foundation/lib/components";
+import T from "i18n-react";
 
 import {
     getSummitById,
@@ -34,10 +35,6 @@ import EventDetailPage from "./pages/event-detail";
 import EventRsvpPage from "./pages/event-rsvp";
 import SpeakerProfilePage from "./pages/speaker-profile";
 import NoMatchPage from "./pages/no-match-page";
-
-import {AjaxLoader} from "openstack-uicore-foundation/lib/components";
-import 'awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css'
-import T from "i18n-react";
 import GeneralMetaTags from "./pages/meta-tags/general";
 
 
@@ -48,21 +45,21 @@ class Schedule extends Component {
     }
 
     componentDidMount() {
-        const { apiAccessToken, apiUrl, scheduleUrl } = this.props;
-        this.props.loadSession(apiAccessToken, apiUrl, scheduleUrl);
+        const { apiAccessToken, apiUrl, scheduleBase, scheduleUrl, loginRedirectUrl } = this.props;
+        this.props.loadSession(apiAccessToken, apiUrl, scheduleBase, scheduleUrl, loginRedirectUrl);
     }
 
     componentDidUpdate(prevProps, prevState) {
-        const { summitId, accessToken, apiBaseUrl, scheduleLoading, summit } = this.props;
+        const { summitId, apiBaseUrl, scheduleLoading, summit } = this.props;
 
-        if ((accessToken && apiBaseUrl && summitId && (!summit || summit.id !== summitId) && !scheduleLoading)) {
+        if ((apiBaseUrl && summitId && (!summit || summit.id !== summitId) && !scheduleLoading)) {
             this.props.getSummitById(summitId);
         }
 
     }
 
     render() {
-        const {summit, scheduleLoading, searchTerm, match } = this.props;
+        const {summit, scheduleLoading, match } = this.props;
 
         if (!summit) return(<div />);
 

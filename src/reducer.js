@@ -1,3 +1,16 @@
+/**
+ * Copyright 2020 OpenStack Foundation
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ **/
+
 import moment from 'moment';
 import Filter from './tools/filter';
 import {getSummitDates} from './tools/utils';
@@ -8,6 +21,7 @@ import {
     STOP_SCHED_LOADING,
     RECEIVE_USER_PROFILE,
     RECEIVE_SCHED_SUMMIT,
+    RECEIVE_SPEAKERS,
     LOAD_SESSION,
     SET_VIEW,
     RECEIVE_SCHED_EVENTS,
@@ -21,7 +35,8 @@ import {
     REMOVED_FROM_SCHEDULE,
     ADDED_TO_FAVORITES,
     REMOVED_FROM_FAVORITES,
-    SUBMITTED_NEW_COMMENT
+    SUBMITTED_NEW_COMMENT,
+    TOGGLE_FILTERS
 } from './actions';
 
 const DEFAULT_FILTERS = {
@@ -43,6 +58,8 @@ const DEFAULT_STATE = {
     accessToken: null,
     apiBaseUrl: null,
     baseUrl: null,
+    absoluteUrl: null,
+    loginUrl: null,
     view: { type: null, value: null },
     schedule_view_defaults: {day: null, track: null, level: null},
     showFilters: false,
@@ -51,6 +68,7 @@ const DEFAULT_STATE = {
     events: [],
     allEvents: [],
     filtered: [],
+    speakerResults: [],
     scheduleLoading: 0,
     searchTerm: '',
     fullView: false,
@@ -72,8 +90,8 @@ const ScheduleReducer = (state = DEFAULT_STATE, action) => {
         }
         break;
         case LOAD_SESSION:
-            const { accessToken, apiBaseUrl, baseUrl } = payload;
-            return { ...state, accessToken, apiBaseUrl, baseUrl };
+            const { accessToken, apiBaseUrl, baseUrl, absoluteUrl, loginUrl } = payload;
+            return { ...state, accessToken, apiBaseUrl, baseUrl, absoluteUrl, loginUrl };
         break;
         case RECEIVE_USER_PROFILE: {
             let loggedUser = {...payload.response};
@@ -163,6 +181,11 @@ const ScheduleReducer = (state = DEFAULT_STATE, action) => {
             var filtered = Filter.events(state.filters, events, state.loggedUser);
 
             return {...state, events, filtered};
+        }
+        break;
+        case RECEIVE_SPEAKERS: {
+            const speakers = payload.response.data;
+            return {...state, speakerResults: speakers};
         }
         break;
         case RECEIVE_ALL_EVENTS: {

@@ -6,3 +6,5 @@ webpack.common.js
 webpack.dev.js
 webpack.prod.js
 .idea
+node_modules
+package.json

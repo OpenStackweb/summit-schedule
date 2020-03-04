@@ -1,3 +1,16 @@
+/**
+ * Copyright 2020 OpenStack Foundation
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ **/
+
 import {
     getRequest,
     createAction,
@@ -23,6 +36,8 @@ export const REQUEST_SCHED_EVENTS       = 'REQUEST_SCHED_EVENTS';
 export const RECEIVE_SCHED_EVENTS       = 'RECEIVE_SCHED_EVENTS';
 export const REQUEST_ALL_EVENTS         = 'REQUEST_ALL_EVENTS';
 export const RECEIVE_ALL_EVENTS         = 'RECEIVE_ALL_EVENTS';
+export const REQUEST_SPEAKERS           = 'REQUEST_SPEAKERS';
+export const RECEIVE_SPEAKERS           = 'RECEIVE_SPEAKERS';
 export const RECEIVE_EVENT_DETAIL       = 'RECEIVE_EVENT_DETAIL';
 export const RECEIVE_SPEAKER_DETAIL     = 'RECEIVE_SPEAKER_DETAIL';
 export const SET_VIEW                   = 'SET_VIEW';
@@ -41,7 +56,7 @@ export const SHARE_EVENT_EMAIL          = 'SHARE_EVENT_EMAIL';
 
 
 const startSchedLoading = () => (dispatch) => {
-  dispatch(createAction(START_SCHED_LOADING)({}));
+    dispatch(createAction(START_SCHED_LOADING)({}));
 };
 
 const stopSchedLoading = () => (dispatch) => {
@@ -49,8 +64,8 @@ const stopSchedLoading = () => (dispatch) => {
 };
 
 
-export const loadSession = (accessToken, apiBaseUrl, baseUrl) => (dispatch) => {
-    dispatch(createAction(LOAD_SESSION)({ accessToken, apiBaseUrl, baseUrl }));
+export const loadSession = (accessToken, apiBaseUrl, baseUrl, absoluteUrl, loginUrl) => (dispatch) => {
+    dispatch(createAction(LOAD_SESSION)({ accessToken, apiBaseUrl, baseUrl, absoluteUrl, loginUrl }));
 };
 
 export const getUserProfile = (summitId) => (dispatch, getState) => {
@@ -78,14 +93,13 @@ export const getSummitById = (summitId) => (dispatch, getState) => {
     dispatch(startSchedLoading());
 
     let params = {
-        access_token : accessToken,
         expand: 'event_types, tracks, track_groups, presentation_levels, locations.rooms, locations.floors'
     };
 
     return getRequest(
         createAction(REQUEST_SCHED_SUMMIT),
         createAction(RECEIVE_SCHED_SUMMIT),
-        `${apiBaseUrl}/api/v1/summits/${summitId}`,
+        `${apiBaseUrl}/api/public/v1/summits/${summitId}`,
         defaultErrorHandler
     )(params)(dispatch)
         .then(() => dispatch(getUserProfile(summitId)))
@@ -171,6 +185,7 @@ export const toggleFilters = () => {
 export const setSearch = (searchTerm) => (dispatch, getState) => {
     dispatch(createAction(SET_SEARCH)({ searchTerm }));
     dispatch(getEvents());
+    dispatch(getSpeakers());
 };
 
 export const createCalendarShareableLink = () => (dispatch, getState) => {
@@ -237,8 +252,8 @@ export const getEvents = () => (dispatch, getState) => {
                 filter = [`start_date>=${startDate}`, `end_date<=${endDate}`];
                 break;
             case 'track':
-                const track = summit.tracks.find(t => t.code.toLowerCase() === view.value);
-                filter = [`track_id==${track.id}`];
+                const track = summit.tracks.find(t => t.code && t.code.toLowerCase() === view.value.toLowerCase());
+                if (track) filter = [`track_id==${track.id}`];
                 break;
             case 'level':
                 filter = [`level==${view.value}`];
@@ -250,7 +265,6 @@ export const getEvents = () => (dispatch, getState) => {
         expand       : 'speakers, moderator, type, track, location, location.venue, location.floor',
         page         : 1,
         per_page     : 100,
-        access_token : accessToken,
         'filter[]'   : filter,
         order        : '+start_date'
     };
@@ -258,7 +272,7 @@ export const getEvents = () => (dispatch, getState) => {
     return getRequest(
         createAction(REQUEST_SCHED_EVENTS),
         createAction(RECEIVE_SCHED_EVENTS),
-        `${apiBaseUrl}/api/v1/summits/${summit.id}/events/published`,
+        `${apiBaseUrl}/api/public/v1/summits/${summit.id}/events/published`,
         defaultErrorHandler
     )(params)(dispatch).then(() => {
             dispatch(stopSchedLoading());
@@ -273,7 +287,6 @@ export const getAllEvents = () => (dispatch, getState) => {
         expand       : 'type, track, location, location.venue, location.floor',
         page         : 1,
         per_page     : 100,
-        access_token : accessToken,
         order        : '+start_date'
     };
 
@@ -282,7 +295,7 @@ export const getAllEvents = () => (dispatch, getState) => {
     getRequest(
         createAction(REQUEST_ALL_EVENTS),
         createAction(RECEIVE_ALL_EVENTS),
-        `${apiBaseUrl}/api/v1/summits/${summit.id}/events/published`,
+        `${apiBaseUrl}/api/public/v1/summits/${summit.id}/events/published`,
         defaultErrorHandler
     )(params)(dispatch).then((payload) => {
         const {last_page} = payload.response;
@@ -293,7 +306,7 @@ export const getAllEvents = () => (dispatch, getState) => {
             getRequest(
                 createAction(REQUEST_ALL_EVENTS),
                 createAction(RECEIVE_ALL_EVENTS),
-                `${apiBaseUrl}/api/v1/summits/${summit.id}/events/published`,
+                `${apiBaseUrl}/api/public/v1/summits/${summit.id}/events/published`,
                 defaultErrorHandler
             )(params)(dispatch)
         }
@@ -309,7 +322,6 @@ export const getEvent = (eventId) => (dispatch, getState) => {
 
     let params = {
         expand       : 'rsvp_template, type, track, location, location.venue, location.floor, speakers, moderator, sponsors, groups, feedback',
-        access_token : accessToken,
     };
 
     dispatch(startSchedLoading());
@@ -317,8 +329,61 @@ export const getEvent = (eventId) => (dispatch, getState) => {
     return getRequest(
         null,
         createAction(RECEIVE_EVENT_DETAIL),
-        `${apiBaseUrl}/api/v1/summits/${summit.id}/events/${eventId}`,
+        `${apiBaseUrl}/api/public/v1/summits/${summit.id}/events/${eventId}/published`,
         eventErrorHandler
+    )(params)(dispatch).then(() => {
+            dispatch(stopSchedLoading());
+        }
+    );
+};
+
+/*********************************************************************************/
+/*                               SPEAKERS                                        */
+/*********************************************************************************/
+
+
+export const getSpeakers = () => (dispatch, getState) => {
+    let { summit, apiBaseUrl, searchTerm } = getState();
+    let filter = [];
+    dispatch(startSchedLoading());
+
+    if (searchTerm) {
+        filter= [`first_name=@${searchTerm},last_name=@${searchTerm}`];
+    }
+
+    let params = {
+        expand       : 'member, presentations, presentation.type',
+        page         : 1,
+        per_page     : 100,
+        'filter[]'   : filter,
+        order        : '+last_name'
+    };
+
+    return getRequest(
+        createAction(REQUEST_SPEAKERS),
+        createAction(RECEIVE_SPEAKERS),
+        `${apiBaseUrl}/api/public/v1/summits/${summit.id}/speakers`,
+        defaultErrorHandler
+    )(params)(dispatch).then(() => {
+            dispatch(stopSchedLoading());
+        }
+    );
+};
+
+
+export const getSpeaker = (speakerId) => (dispatch, getState) => {
+    let { apiBaseUrl, summit } = getState();
+    dispatch(startSchedLoading());
+
+    let params = {
+        expand: 'member, presentations, presentation.type'
+    };
+
+    return getRequest(
+        null,
+        createAction(RECEIVE_SPEAKER_DETAIL),
+        `${apiBaseUrl}/api/public/v1/summits/${summit.id}/speakers/${speakerId}`,
+        defaultErrorHandler
     )(params)(dispatch).then(() => {
             dispatch(stopSchedLoading());
         }
@@ -329,22 +394,6 @@ export const getEvent = (eventId) => (dispatch, getState) => {
 /*********************************************************************************/
 /*                               USER ACTIONS                                    */
 /*********************************************************************************/
-
-
-/*
-@GET("v1/summits/{summit_id}/members/me")
-Observable<Response<ResponseBody>> info(@Path("summit_id") int summitId, @Query("expand") String expand);
-@POST("v1/summits/{summit_id}/members/me/favorites/{event_id}")
-Call<ResponseBody> addToFavorites(@Path("summit_id") int summitId, @Path("event_id") int eventId);
-@DELETE("v1/summits/{summit_id}/members/me/favorites/{event_id}")
-Call<ResponseBody> removeFromFavorites(@Path("summit_id") int summitId, @Path("event_id") int eventId);
-@POST("v1/summits/{summit_id}/members/me/schedule/{event_id}")
-Call<ResponseBody> addToMySchedule(@Path("summit_id") int summitId, @Path("event_id") Integer eventId);
-@DELETE("v1/summits/{summit_id}/members/me/schedule/{event_id}")
-Call<ResponseBody> removeFromMySchedule(@Path("summit_id") int summitId, @Path("event_id") Integer eventId);
-@DELETE("v1/summits/{summit_id}/members/me/schedule/{event_id}/rsvp")
-Call<ResponseBody>deleteRSVP(@Path("summit_id") int summitId, @Path("event_id") Integer eventId);
-}*/
 
 
 export const addEventToSchedule = (event) => (dispatch, getState) => {
@@ -367,16 +416,16 @@ export const addEventToSchedule = (event) => (dispatch, getState) => {
     );
 
 
-        /*.then(
-            () => {
-                console.log(`calling then action for ${event.id}`);
-                if (event.has_rsvp && event.rsvp_external){
-                    const url = new URI(event.rsvp_link);
-                    url.addQuery('BackURL', window.location);
-                    window.location = url.toString();
-                }
+    /*.then(
+        () => {
+            console.log(`calling then action for ${event.id}`);
+            if (event.has_rsvp && event.rsvp_external){
+                const url = new URI(event.rsvp_link);
+                url.addQuery('BackURL', window.location);
+                window.location = url.toString();
             }
-        );*/
+        }
+    );*/
 };
 
 export const removeEventFromSchedule = (event) => (dispatch, getState) =>  {
@@ -527,30 +576,6 @@ export const shareByEmail = (event, fromEmail, toEmail) => (dispatch, getState) 
 };
 
 /*********************************************************************************/
-/*                               SPEAKER                                         */
-/*********************************************************************************/
-
-export const getSpeaker = (speakerId) => (dispatch, getState) => {
-    let { accessToken, apiBaseUrl } = getState();
-    dispatch(startSchedLoading());
-
-    let params = {
-        access_token : accessToken,
-        expand: 'member, presentations, presentation.type'
-    };
-
-    return getRequest(
-        null,
-        createAction(RECEIVE_SPEAKER_DETAIL),
-        `${apiBaseUrl}/api/v1/speakers/${speakerId}`,
-        defaultErrorHandler
-    )(params)(dispatch).then(() => {
-            dispatch(stopSchedLoading());
-        }
-    );
-};
-
-/*********************************************************************************/
 /*                               ERROR HANDLERS                                  */
 /*********************************************************************************/
 
@@ -560,7 +585,7 @@ const defaultErrorHandler = (err, res) => (dispatch, state) => {
     let msg = '';
 
     dispatch(stopSchedLoading());
-    dispatch(authErrorHandler(err, res));
+    //dispatch(authErrorHandler(err, res));
 };
 
 const eventErrorHandler = (err, res) => (dispatch, state) => {
@@ -578,7 +603,7 @@ const eventErrorHandler = (err, res) => (dispatch, state) => {
 
         dispatch(showMessage( error_message, () => dispatch(setDefaultView())));
     } else {
-        dispatch(authErrorHandler(err, res));
+        //dispatch(authErrorHandler(err, res));
     }
 };
 

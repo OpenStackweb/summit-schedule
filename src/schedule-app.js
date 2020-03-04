@@ -17,20 +17,25 @@ import thunk from 'redux-thunk';
 import {applyMiddleware, createStore} from 'redux';
 import ScheduleReducer from './reducer';
 import Schedule from './schedule';
-import './styles/schedule.less';
 import {Route, Router} from "react-router-dom";
 import { createBrowserHistory } from 'history';
-
 
 export default class ScheduleApp extends Component {
     constructor(props) {
         super(props);
         this.store = createStore(ScheduleReducer, applyMiddleware(thunk));
-        this.history = createBrowserHistory({basename: props.scheduleBase});
+        this.history = createBrowserHistory({basename: props.schedule_base});
     }
 
     render() {
-        const scheduleProps = this.props;
+        const scheduleProps = {
+            summitId: parseInt(this.props.summit_id),
+            apiAccessToken: this.props.api_access_token,
+            apiUrl: this.props.api_url,
+            scheduleBase: this.props.schedule_base,
+            scheduleUrl: this.props.schedule_url,
+            loginRedirectUrl: this.props.login_url,
+        };
 
         return (
             <Provider store={this.store}>
