@@ -1,6 +1,6 @@
 {
   "name": "summit-schedule-app",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Summit Schedule App",
   "main": "lib/summit-schedule-app.js",
   "scripts": {
