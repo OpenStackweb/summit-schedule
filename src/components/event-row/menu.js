@@ -18,6 +18,7 @@ import {FacebookShareButton, TwitterShareButton} from 'react-share';
 import EventRSVPAction from "../event-actions/event-rsvp-action";
 import EventWatchAction from "../event-actions/event-watch-action";
 import EventScheduleAction from "../event-actions/event-schedule-action";
+import EventExtRSVPAction from "../event-actions/event-ext-rsvp-action";
 
 
 class EventMenu extends Component {
@@ -56,20 +57,26 @@ class EventMenu extends Component {
                         <span className="caret caret-event-actions" />
                     </Dropdown.Toggle>
                     <Dropdown.Menu className="dropdown-menu-event-actions">
+                        { event.rsvp_external &&
+                        <EventExtRSVPAction
+                            event={event}
+                            loggedUser={loggedUser}
+                            type="menuitem"
+                            onUnRsvp={removeEventFromSchedule}
+                            onRsvp={addEventToSchedule}
+                        />
+                        }
+                        {event.rsvp_template && !event.rsvp_external &&
                         <EventRSVPAction
+                            loginUrl={loginUrl}
                             event={event}
                             history={history}
                             loggedUser={loggedUser}
                             type="menuitem"
                             onUnRsvp={unRsvpEvent}
                         />
-                        <EventWatchAction
-                            event={event}
-                            loggedUser={loggedUser}
-                            type="menuitem"
-                            onWatch={addEventToFavorites}
-                            onUnWatch={removeEventFromFavorites}
-                        />
+                        }
+                        { !event.rsvp_template && !event.rsvp_external &&
                         <EventScheduleAction
                             loginUrl={loginUrl}
                             event={event}
@@ -78,6 +85,17 @@ class EventMenu extends Component {
                             onSchedule={addEventToSchedule}
                             onUnSchedule={removeEventFromSchedule}
                         />
+                        }
+                        { event.to_record &&
+                        <EventWatchAction
+                            loginUrl={loginUrl}
+                            event={event}
+                            loggedUser={loggedUser}
+                            type="menuitem"
+                            onWatch={addEventToFavorites}
+                            onUnWatch={removeEventFromFavorites}
+                        />
+                        }
                         <MenuItem>
                             <FacebookShareButton url={`${absoluteUrl}/events/${event.id}`}>
                                 <><i className="fa fa-facebook-official" />&nbsp;Share on Facebook</>

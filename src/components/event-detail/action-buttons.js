@@ -34,6 +34,7 @@ class ActionButtons extends React.Component {
             history,
             eventDetail: event,
             loggedUser,
+            loginUrl,
             removeEventFromSchedule,
             addEventToSchedule,
             unRsvpEvent,
@@ -43,7 +44,7 @@ class ActionButtons extends React.Component {
 
         return (
             <div className="event-actions">
-                { event.has_rsvp && event.rsvp_external &&
+                { event.rsvp_external &&
                 <EventExtRSVPAction
                     event={event}
                     loggedUser={loggedUser}
@@ -52,18 +53,20 @@ class ActionButtons extends React.Component {
                     onRsvp={addEventToSchedule}
                 />
                 }
-                { event.has_rsvp && !event.rsvp_external &&
+                { event.rsvp_template && !event.rsvp_external &&
                 <EventRSVPAction
                     event={event}
+                    loginUrl={loginUrl}
                     history={history}
                     loggedUser={loggedUser}
                     type="button"
                     onUnRsvp={unRsvpEvent}
                 />
                 }
-                { !event.has_rsvp &&
+                { !event.rsvp_template && !event.rsvp_external &&
                 <EventScheduleAction
                     event={event}
+                    loginUrl={loginUrl}
                     loggedUser={loggedUser}
                     type="button"
                     onSchedule={addEventToSchedule}
@@ -73,6 +76,7 @@ class ActionButtons extends React.Component {
                 { event.to_record &&
                 <EventWatchAction
                     event={event}
+                    loginUrl={loginUrl}
                     loggedUser={loggedUser}
                     type="button"
                     onWatch={addEventToFavorites}

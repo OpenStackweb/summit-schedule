@@ -14,8 +14,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { MenuItem } from 'react-bootstrap';
-import {getEventSlug} from "../../tools/utils";
+import {getEventSlug, loginAlert} from "../../tools/utils";
 import Swal from 'sweetalert2';
+
 
 class EventRSVPAction extends Component {
 
@@ -46,19 +47,11 @@ class EventRSVPAction extends Component {
     }
 
     handleRsvp(ev) {
-        let {event, loggedUser, history} = this.props;
+        let {event, loggedUser, history, loginUrl} = this.props;
         ev.preventDefault();
 
         if (!loggedUser) {
-            Swal.fire({
-                title: 'Login Required',
-                text: "You need to log in to proceed with this action.",
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Log in'
-            });
+            loginAlert(loginUrl);
         } else {
             let eventSlug = getEventSlug(event);
             history.push(`/events/${event.id}/${eventSlug}/rsvp`);

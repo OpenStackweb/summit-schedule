@@ -58,7 +58,7 @@ class EventRsvpPage extends React.Component {
         );
 
         return (
-            <div id="event-rsvp-page">
+            <div className="event-rsvp-page">
                 <div className="row">
                     <div className="col-md-12 text-left">
                         <a href="#" onClick={this.goBack}>Go Back</a>
@@ -69,6 +69,7 @@ class EventRsvpPage extends React.Component {
                         <div className="title">{event.title}</div>
                     </div>
                 </div>
+                <hr />
                 <div className="row">
                     <div className="col-md-12 col-xs-12">
                         <RawHTML>{event.description}</RawHTML>
@@ -76,8 +77,12 @@ class EventRsvpPage extends React.Component {
                 </div>
                 <hr/>
 
-                <RsvpForm questions={sortedQuestions} onSubmit={this.handleRsvpSubmit} errors={[]} />
-
+                <div className="row">
+                    <div className="col-md-8 col-md-offset-2 col-xs-12 rsvp-form-wrapper">
+                        <h2 className="rsvp-form-title">RSVP</h2>
+                        <RsvpForm questions={sortedQuestions} onSubmit={this.handleRsvpSubmit} errors={[]} />
+                    </div>
+                </div>
             </div>
         )
     }

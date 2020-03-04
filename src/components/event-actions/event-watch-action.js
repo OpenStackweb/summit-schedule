@@ -15,6 +15,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { MenuItem } from 'react-bootstrap';
 import Swal from 'sweetalert2';
+import {loginAlert} from "../../tools/utils";
 
 class EventWatchAction extends Component {
 
@@ -43,19 +44,11 @@ class EventWatchAction extends Component {
     }
 
     handleWatch(ev) {
-        let {onWatch, event, loggedUser} = this.props;
+        let {onWatch, event, loggedUser, loginUrl} = this.props;
         ev.preventDefault();
 
         if (!loggedUser) {
-            Swal.fire({
-                title: 'Login Required',
-                text: "You need to log in to proceed with this action.",
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Log in'
-            });
+            loginAlert(loginUrl);
         } else {
             onWatch(event);
         }

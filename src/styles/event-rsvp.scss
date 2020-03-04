@@ -13,11 +13,36 @@
 
   div.title{
     text-align: center;
-    padding: 25px
+    padding: 25px;
+    color: $dark-blue;
+    font-size: 24px;
+    margin: 0;
+    line-height: 1.5;
+    font-family: 'Open Sans', Helvetica, Arial, sans-serif;
   }
 
   .abc-radio {
     margin-top: 10px;
+  }
+
+  .rsvp-form-wrapper {
+    border: 1px solid darkblue;
+    padding: 15px;
+
+    .rsvp-form-title {
+      margin-bottom: 25px;
+      background-color: #777777;
+      display: inline;
+      padding: 0.2em 0.6em 0.3em;
+      font-size: 75%;
+      font-weight: 700;
+      line-height: 1;
+      color: #fff;
+      text-align: left;
+      white-space: nowrap;
+      vertical-align: baseline;
+      border-radius: 0.25em;
+    }
   }
 
 }
