@@ -25,34 +25,35 @@ import { getUrlParam, getUrlParams, setUrlParam, setUrlParams, clearUrlParams, g
 
 import moment from 'moment-timezone';
 
-export const START_SCHED_LOADING        = 'START_SCHED_LOADING';
-export const STOP_SCHED_LOADING         = 'STOP_SCHED_LOADING';
-export const LOAD_SESSION               = 'LOAD_SESSION';
-export const REQUEST_USER_PROFILE       = 'REQUEST_USER_PROFILE';
-export const RECEIVE_USER_PROFILE       = 'RECEIVE_USER_PROFILE';
-export const REQUEST_SCHED_SUMMIT       = 'REQUEST_SCHED_SUMMIT';
-export const RECEIVE_SCHED_SUMMIT       = 'RECEIVE_SCHED_SUMMIT';
-export const REQUEST_SCHED_EVENTS       = 'REQUEST_SCHED_EVENTS';
-export const RECEIVE_SCHED_EVENTS       = 'RECEIVE_SCHED_EVENTS';
-export const REQUEST_ALL_EVENTS         = 'REQUEST_ALL_EVENTS';
-export const RECEIVE_ALL_EVENTS         = 'RECEIVE_ALL_EVENTS';
-export const REQUEST_SPEAKERS           = 'REQUEST_SPEAKERS';
-export const RECEIVE_SPEAKERS           = 'RECEIVE_SPEAKERS';
-export const RECEIVE_EVENT_DETAIL       = 'RECEIVE_EVENT_DETAIL';
-export const RECEIVE_SPEAKER_DETAIL     = 'RECEIVE_SPEAKER_DETAIL';
-export const SET_VIEW                   = 'SET_VIEW';
-export const TOGGLE_FILTERS             = 'TOGGLE_FILTERS';
-export const RESET_FILTERS              = 'RESET_FILTERS';
-export const SET_FILTERS                = 'SET_FILTERS';
-export const SET_SEARCH                 = 'SET_SEARCH';
-export const ADDED_TO_SCHEDULE          = 'ADDED_TO_SCHEDULE';
-export const REMOVED_FROM_SCHEDULE      = 'REMOVED_FROM_SCHEDULE';
-export const ADDED_TO_FAVORITES         = 'ADDED_TO_FAVORITES';
-export const REMOVED_FROM_FAVORITES     = 'REMOVED_FROM_FAVORITES';
-export const RSVP_SCHED_EVENT           = 'RSVP_SCHED_EVENT';
-export const UN_RSVP_SCHED_EVENT        = 'UN_RSVP_SCHED_EVENT';
-export const SUBMITTED_NEW_COMMENT      = 'SUBMITTED_NEW_COMMENT';
-export const SHARE_EVENT_EMAIL          = 'SHARE_EVENT_EMAIL';
+export const START_SCHED_LOADING            = 'START_SCHED_LOADING';
+export const STOP_SCHED_LOADING             = 'STOP_SCHED_LOADING';
+export const LOAD_SESSION                   = 'LOAD_SESSION';
+export const REQUEST_USER_PROFILE           = 'REQUEST_USER_PROFILE';
+export const RECEIVE_USER_PROFILE           = 'RECEIVE_USER_PROFILE';
+export const REQUEST_SCHED_SUMMIT           = 'REQUEST_SCHED_SUMMIT';
+export const RECEIVE_SCHED_SUMMIT           = 'RECEIVE_SCHED_SUMMIT';
+export const REQUEST_SCHED_EVENTS           = 'REQUEST_SCHED_EVENTS';
+export const RECEIVE_SCHED_EVENTS           = 'RECEIVE_SCHED_EVENTS';
+export const REQUEST_ALL_EVENTS             = 'REQUEST_ALL_EVENTS';
+export const RECEIVE_ALL_EVENTS             = 'RECEIVE_ALL_EVENTS';
+export const REQUEST_SPEAKERS               = 'REQUEST_SPEAKERS';
+export const RECEIVE_SPEAKERS               = 'RECEIVE_SPEAKERS';
+export const RECEIVE_EVENT_DETAIL           = 'RECEIVE_EVENT_DETAIL';
+export const RECEIVE_SPEAKER_DETAIL         = 'RECEIVE_SPEAKER_DETAIL';
+export const SET_VIEW                       = 'SET_VIEW';
+export const TOGGLE_FILTERS                 = 'TOGGLE_FILTERS';
+export const RESET_FILTERS                  = 'RESET_FILTERS';
+export const SET_FILTERS                    = 'SET_FILTERS';
+export const SET_SEARCH                     = 'SET_SEARCH';
+export const ADDED_TO_SCHEDULE              = 'ADDED_TO_SCHEDULE';
+export const REMOVED_FROM_SCHEDULE          = 'REMOVED_FROM_SCHEDULE';
+export const ADDED_TO_FAVORITES             = 'ADDED_TO_FAVORITES';
+export const REMOVED_FROM_FAVORITES         = 'REMOVED_FROM_FAVORITES';
+export const RSVP_SCHED_EVENT               = 'RSVP_SCHED_EVENT';
+export const UN_RSVP_SCHED_EVENT            = 'UN_RSVP_SCHED_EVENT';
+export const SUBMITTED_NEW_COMMENT          = 'SUBMITTED_NEW_COMMENT';
+export const SHARE_EVENT_EMAIL              = 'SHARE_EVENT_EMAIL';
+export const CALENDAR_SHARE_LINK_CREATED    = 'CALENDAR_SHARE_LINK_CREATED';
 
 
 const startSchedLoading = () => (dispatch) => {
