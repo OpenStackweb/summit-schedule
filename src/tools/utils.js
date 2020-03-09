@@ -44,7 +44,10 @@ export const getUrlParam = param => {
     return fragmentParser.getParam(param);
 };
 
-export const setUrlParam = (name, value) => {
+export const setUrlParam = (name, value, clearVars = null) => {
+    if (clearVars) {
+        fragmentParser.deleteParams(clearVars);
+    }
     fragmentParser.setParam(name, value);
     window.location.hash = fragmentParser.serialize();
 };

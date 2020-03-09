@@ -49,7 +49,7 @@ const SpeakerBox = ({
                 </div>
                 <div className="speaker_job_title"> {speaker.title} </div>
                 <div className="speaker_bio">
-                    <RawHTML>{`${speaker.bio.substring(0, 400)}...`}</RawHTML>
+                    <RawHTML>{speaker.bio ? `${speaker.bio.substring(0, 400)}...` : ''}</RawHTML>
                     <a href="" onClick={handleSpeakerLink.bind(this, speaker.id)}>
                         FULL PROFILE
                     </a>

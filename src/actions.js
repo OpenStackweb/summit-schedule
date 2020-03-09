@@ -149,8 +149,8 @@ const setDefaultView = () => (dispatch, getState) => {
 };
 
 export const setView = (type, value) => (dispatch) => {
-    clearUrlParams(['day', 'track', 'level']);
-    setUrlParam(type, value);
+    //clearUrlParams(['day', 'track', 'level']);
+    setUrlParam(type, value, ['day', 'track', 'level']);
     dispatch(createAction(SET_VIEW)({ type, value }));
 };
 

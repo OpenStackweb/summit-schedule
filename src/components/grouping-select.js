@@ -52,7 +52,7 @@ class GroupingSelect extends Component {
                         <ul className="nav navbar-nav">
                             {summit.dates.map(date =>
                                 <li key={date.string} className={date.string === view.value ? 'active day-selected' : ''}>
-                                    <a onClick={e => this.changeView(e, view.type, date.string)} href="#" className="day-label">
+                                    <a onClick={e => this.changeView(e, view.type, date.string)} href="" className="day-label">
                                         {date.label}
                                     </a>
                                 </li>
