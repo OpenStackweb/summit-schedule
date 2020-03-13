@@ -20,6 +20,7 @@
     "@babel/preset-env": "^7.5.5",
     "@babel/preset-flow": "^7.0.0",
     "@babel/preset-react": "^7.0.0",
+    "@react-pdf/renderer": "^1.6.8",
     "awesome-bootstrap-checkbox": "^1.0.1",
     "babel-cli": "^6.26.0",
     "babel-loader": "^8.0.6",

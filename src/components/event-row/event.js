@@ -45,6 +45,7 @@ class Event extends Component {
             summit,
             loginUrl,
             absoluteUrl,
+            venuesUrl,
             loggedUser,
             addEventToSchedule,
             addEventToFavorites,
@@ -67,6 +68,8 @@ class Event extends Component {
                     <EventHeader
                         event={event}
                         summit={summit}
+                        venuesUrl={venuesUrl}
+                        history={history}
                     />
                     <div className="event-state col-sm-1 col-xs-1">
                         {going && !filters.favorites &&

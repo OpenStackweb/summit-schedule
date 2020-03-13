@@ -64,7 +64,7 @@ class EventDetailPage extends React.Component {
     }
 
     render() {
-        const {eventDetail: event, summit, match, history, searchTerm} = this.props;
+        const {eventDetail: event, summit, match, history, searchTerm, venuesUrl} = this.props;
         const shouldShowVenues = (summit.start_showing_venues_date * 1000) < Date.now();
         const timeZone = summit.time_zone_id;
 
@@ -143,7 +143,7 @@ class EventDetailPage extends React.Component {
                                     <i className="fa fa-map-marker icon-map"/>
                                 </div>
                                 <div className="col-md-10 col-xs-10 info_item_text">
-                                    <a href="link-venue"> {locationNice} </a>
+                                    <a href={`${venuesUrl}/#room=${event.location.id}`}> {locationNice} </a>
                                 </div>
                             </div>
                             }

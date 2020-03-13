@@ -35,6 +35,8 @@ export default class ScheduleApp extends Component {
             scheduleBase: this.props.schedule_base,
             scheduleUrl: this.props.schedule_url,
             loginRedirectUrl: this.props.login_url,
+            calendarInstructionsLink: this.props.calendar_instructions_link,
+            venuesPageLink: this.props.venues_page_link,
         };
 
         return (

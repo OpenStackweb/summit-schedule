@@ -18,12 +18,9 @@ import {epochToMomentTimeZone} from 'openstack-uicore-foundation/lib/methods';
 const EventHeader = ({
     event,
     summit,
+    venuesUrl,
+    history
 }) => {
-
-    const getSearchLink = term => {
-        term = term.replace(/\s+/g, '+')
-        return `insert-search-url?t=${encodeURIComponent(term)}`
-    };
 
     const getLocationName = location => {
         let locationName = '';
@@ -40,13 +37,16 @@ const EventHeader = ({
         return locationName || 'TBA';
     };
 
+    const handleSearch = (term, ev) => {
+        ev.preventDefault();
+        history.push(`/search/${term}`);
+    };
+
     const eventDate = epochToMomentTimeZone(event.start_date, summit.time_zone_id).format('ddd D');
     const eventStartTime = epochToMomentTimeZone(event.start_date, summit.time_zone_id).format('h:mma');
     const eventEndTime = epochToMomentTimeZone(event.end_date, summit.time_zone_id).format('h:mma');
     const locationName = getLocationName(event.location);
-    const venueSearchLink = event.location ? event.location.link : `${summit.link}venues`;
-    const trackSearchLink = event.track ? getSearchLink(event.track.name) : '#';
-    const eventTypeSearchLink = event.type ? getSearchLink(event.type.name) : '#';
+    const venueSearchLink = event.location ? `${venuesUrl}/#room=${event.location.id}` : venuesUrl;
     const shouldShowVenues = (summit.start_showing_venues_date * 1000) < Date.now();
 
     return (
@@ -64,8 +64,7 @@ const EventHeader = ({
                     {shouldShowVenues &&
                     <div>
                         <i className="fa fa-map-marker icon-map"></i>&nbsp;
-                        <a onClick={e => e.stopPropagation()} href={venueSearchLink}
-                        className="search-link venue-search-link">
+                        <a href={venueSearchLink} className="search-link venue-search-link">
                             {locationName}
                         </a>
                     </div>
@@ -92,8 +91,12 @@ const EventHeader = ({
                 <div className="col-xs-8 col-track">
                     {event.class_name !== 'SummitEvent' && event.track &&
                     <span className="track">
-                        <a onClick={e => e.stopPropagation()} href={trackSearchLink}
-                        className="search-link track-search-link" title="Search Track">
+                        <a
+                            href=""
+                            onClick={handleSearch.bind(this, event.track.name)}
+                            className="search-link track-search-link"
+                            title="Search Track"
+                        >
                             {event.track ? event.track.name : 'N/A'}
                         </a>
                     </span>
@@ -101,8 +104,8 @@ const EventHeader = ({
                 </div>
                 <div className="col-xs-4 event-type-col">
                     <a
-                        onClick={e => e.stopPropagation()}
-                        href={eventTypeSearchLink}
+                        onClick={handleSearch.bind(this, event.type.name)}
+                        href=""
                         className="search-link event-type-search-link"
                         title="Search Event Type"
                     >

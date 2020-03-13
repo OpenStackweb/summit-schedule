@@ -32,6 +32,11 @@ const EventDetails = ({
         history.push(`/speakers/${speaker.id}`);
     };
 
+    const handleSearch = (term, ev) => {
+        ev.preventDefault();
+        history.push(`/search/${term}`);
+    };
+
     return (
         <>
             <div className="row">
@@ -87,7 +92,7 @@ const EventDetails = ({
                             <i className="fa fa-signal level-icon" />
                             <span>Difficulty Level:</span>&nbsp;
                             <span className="presentation-level">
-                                <a className="search-link" title="Search Presentation Level" href={`global-search?t=${event.level}`}>
+                                <a href="" className="search-link" onClick={handleSearch.bind(this, event.level)} >
                                     {event.level}
                                 </a>
                             </span>
@@ -103,7 +108,7 @@ const EventDetails = ({
                             </div>
                             {event.tags.map(tag =>
                                 <div key={`tag-${tag.id}`} title="Search Tag" className="tag">
-                                    <a className="search-link" href={`global-search?t=${tag.tag}`}>{tag.tag}</a>
+                                    <a className="search-link" href="" onClick={handleSearch.bind(this, tag.tag)} >{tag.tag}</a>
                                 </div>
                             )}
                         </div>

@@ -19,6 +19,9 @@ import FullScheduleGroup from "../components/full-schedule-group";
 import T from "i18n-react";
 import {connect} from "react-redux";
 import {getAllEvents} from "../actions";
+import { PDFDownloadLink, Document, Page, Text, View } from '@react-pdf/renderer';
+import FullSchedulePDF from '../components/full-schedule-pdf';
+
 
 class FullSchedulePage extends React.Component {
 
@@ -90,6 +93,25 @@ class FullSchedulePage extends React.Component {
         return groupedEvents;
     }
 
+    getGroupedEvents() {
+        const {groupBy} = this.state;
+        let events = [];
+
+        switch (groupBy) {
+            case 'day':
+                events = this.groupEventsByDay();
+                break;
+            case 'track':
+                events = this.groupEventsByDay();
+                break;
+            case 'type':
+                events = this.groupEventsByDay();
+                break;
+        }
+
+        return events;
+    }
+
     goBack(ev) {
         ev.preventDefault();
         this.props.history.goBack();
@@ -104,6 +126,9 @@ class FullSchedulePage extends React.Component {
             {label: 'Sort by Track', value: 'track'},
             {label: 'Sort by Event Type', value: 'type'}
         ];
+
+        let groupedEvents = this.getGroupedEvents();
+
 
         return (
             <div className="full-schedule-page">
@@ -120,7 +145,16 @@ class FullSchedulePage extends React.Component {
                     </div>
                     <div className="col-md-6">
                         <div className="col-md-3 pull-right">
-                            <button className="btn btn-primary">Export PDF</button>
+                            {this.state.pdf &&
+                            <div>
+                                <PDFDownloadLink className="btn btn-primary" document={<FullSchedulePDF groupedEvents={groupedEvents} />} fileName="full-schedule.pdf">
+                                    {({blob, url, loading, error}) => (loading ? 'Loading document...' : 'Download PDF')}
+                                </PDFDownloadLink>
+                            </div>
+                            }
+                            {!this.state.pdf && <button className="btn btn-primary" onClick={() => this.setState({pdf:true})}>
+                                Export to Pdf
+                            </button>}
                         </div>
                         <div className="col-md-4 pull-right">
                             <Dropdown
@@ -148,23 +182,7 @@ class FullSchedulePage extends React.Component {
                 </div>
                 {allEvents && allEvents.length > 0 &&
                 <div className="event-list-wrapper">
-                    {groupBy === 'day' && this.groupEventsByDay().map(group => (
-                        <FullScheduleGroup
-                            key={`group-${group.value}`}
-                            group={group}
-                            timeZone={timeZone}
-                            showDesc={showDesc}
-                        />
-                    ))}
-                    {groupBy === 'track' && this.groupEventsByTrack().map(group => (
-                        <FullScheduleGroup
-                            key={`group-${group.value}`}
-                            group={group}
-                            timeZone={timeZone}
-                            showDesc={showDesc}
-                        />
-                    ))}
-                    {groupBy === 'type' && this.groupEventsByType().map(group => (
+                    {groupedEvents.map(group => (
                         <FullScheduleGroup
                             key={`group-${group.value}`}
                             group={group}

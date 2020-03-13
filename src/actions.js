@@ -54,6 +54,7 @@ export const UN_RSVP_SCHED_EVENT            = 'UN_RSVP_SCHED_EVENT';
 export const SUBMITTED_NEW_COMMENT          = 'SUBMITTED_NEW_COMMENT';
 export const SHARE_EVENT_EMAIL              = 'SHARE_EVENT_EMAIL';
 export const CALENDAR_SHARE_LINK_CREATED    = 'CALENDAR_SHARE_LINK_CREATED';
+export const CALENDAR_SHARE_LINK_DELETED    = 'CALENDAR_SHARE_LINK_DELETED';
 
 
 const startSchedLoading = () => (dispatch) => {
@@ -65,8 +66,8 @@ const stopSchedLoading = () => (dispatch) => {
 };
 
 
-export const loadSession = (accessToken, apiBaseUrl, baseUrl, absoluteUrl, loginUrl) => (dispatch) => {
-    dispatch(createAction(LOAD_SESSION)({ accessToken, apiBaseUrl, baseUrl, absoluteUrl, loginUrl }));
+export const loadSession = (accessToken, apiBaseUrl, baseUrl, absoluteUrl, loginUrl, calendarUrl, venuesUrl) => (dispatch) => {
+    dispatch(createAction(LOAD_SESSION)({ accessToken, apiBaseUrl, baseUrl, absoluteUrl, loginUrl, calendarUrl, venuesUrl }));
 };
 
 export const getUserProfile = (summitId) => (dispatch, getState) => {
@@ -263,7 +264,7 @@ export const getEvents = () => (dispatch, getState) => {
     }
 
     let params = {
-        expand       : 'speakers, moderator, type, track, location, location.venue, location.floor',
+        expand       : 'rsvp_template, type, track, location, location.venue, location.floor, speakers, moderator, sponsors, groups',
         page         : 1,
         per_page     : 100,
         'filter[]'   : filter,

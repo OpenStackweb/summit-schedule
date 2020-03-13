@@ -61,6 +61,8 @@ const DEFAULT_STATE = {
     baseUrl: null,
     absoluteUrl: null,
     loginUrl: null,
+    calendarUrl: null,
+    venuesUrl: null,
     view: { type: null, value: null },
     schedule_view_defaults: {day: null, track: null, level: null},
     showFilters: false,
@@ -91,8 +93,8 @@ const ScheduleReducer = (state = DEFAULT_STATE, action) => {
         }
         break;
         case LOAD_SESSION:
-            const { accessToken, apiBaseUrl, baseUrl, absoluteUrl, loginUrl } = payload;
-            return { ...state, accessToken, apiBaseUrl, baseUrl, absoluteUrl, loginUrl };
+            const { accessToken, apiBaseUrl, baseUrl, absoluteUrl, loginUrl, calendarUrl, venuesUrl } = payload;
+            return { ...state, accessToken, apiBaseUrl, baseUrl, absoluteUrl, loginUrl, calendarUrl, venuesUrl };
         break;
         case RECEIVE_USER_PROFILE: {
             let loggedUser = {...payload.response};

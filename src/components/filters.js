@@ -85,6 +85,7 @@ class Filters extends Component {
             summit,
             loggedUser,
             base_url,
+            calendarUrl,
             history
         } = this.props;
 
@@ -99,7 +100,6 @@ class Filters extends Component {
                     getShareableLink={this.getShareableLink}
                     summit={summit}
                     loggedUser={loggedUser}
-                    base_url={base_url}
                />
 
                 {loggedUser &&
@@ -117,6 +117,7 @@ class Filters extends Component {
                 <ShareableLinkModal
                     showModal={this.state.showShareLinkModal}
                     shareableLink={this.state.shareableLink}
+                    instructionsLink={calendarUrl}
                     hideModal={this.hideShareLinkModal}
                 />
             </div>

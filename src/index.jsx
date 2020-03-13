@@ -29,7 +29,7 @@ class ScheduleWebComponent extends HTMLElement {
     }
 
     static get observedAttributes() {
-        return ['summit_id', 'api_access_token', 'api_url', 'schedule_base', 'schedule_url', 'login_url'];
+        return ['summit_id', 'api_access_token', 'api_url', 'schedule_base', 'schedule_url', 'login_url', 'calendar_instructions_link', 'venues_page_link'];
     }
 
     attributeChangedCallback(name, oldVal, newVal) {
