@@ -31,16 +31,7 @@ class EventScheduleAction extends Component {
     handleUnSchedule(ev) {
         let {onUnSchedule, event} = this.props;
         ev.preventDefault();
-
-        Swal.fire({
-            title: "Are you sure you want to delete this RSVP?",
-            type:"warning",
-            showCloseButton: true,
-            confirmButtonColor: "#DD6B55",
-            confirmButtonText: "Yes, delete RSVP"
-        }).then(function () {
-            onUnSchedule(event);
-        });
+        onUnSchedule(event);
     }
 
     handleSchedule(ev) {

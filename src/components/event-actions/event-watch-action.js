@@ -24,23 +24,14 @@ class EventWatchAction extends Component {
 
         this.state = {};
 
-        this.handleUnWatch = this.handleUnWatch.bind(this)
-        this.handleWatch = this.handleWatch.bind(this)
+        this.handleUnWatch = this.handleUnWatch.bind(this);
+        this.handleWatch = this.handleWatch.bind(this);
     }
 
     handleUnWatch(ev) {
         let {onUnWatch, event} = this.props;
         ev.preventDefault();
-
-        Swal.fire({
-            title: "Are you sure you want to delete this RSVP?",
-            type:"warning",
-            showCloseButton: true,
-            confirmButtonColor: "#DD6B55",
-            confirmButtonText: "Yes, delete RSVP"
-        }).then(function () {
-            onUnWatch(event);
-        });
+        onUnWatch(event);
     }
 
     handleWatch(ev) {

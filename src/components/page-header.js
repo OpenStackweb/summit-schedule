@@ -29,7 +29,11 @@ const PageHeader = ({
     };
 
     const search = (term) => {
-        history.push(`/search/${term}`);
+        if (term.trim()) {
+            history.push(`/search/${term}`);
+        } else {
+            history.push(`/`);
+        }
     };
 
     return (
