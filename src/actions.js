@@ -66,8 +66,8 @@ const stopSchedLoading = () => (dispatch) => {
 };
 
 
-export const loadSession = (accessToken, apiBaseUrl, baseUrl, absoluteUrl, loginUrl, calendarInstructionsUrl, venuesUrl) => (dispatch) => {
-    dispatch(createAction(LOAD_SESSION)({ accessToken, apiBaseUrl, baseUrl, absoluteUrl, loginUrl, calendarInstructionsUrl, venuesUrl }));
+export const loadSession = (accessToken, apiBaseUrl, baseUrl, absoluteUrl, loginUrl, venuesUrl) => (dispatch) => {
+    dispatch(createAction(LOAD_SESSION)({ accessToken, apiBaseUrl, baseUrl, absoluteUrl, loginUrl, venuesUrl }));
 };
 
 export const getUserProfile = (summitId) => (dispatch, getState) => {

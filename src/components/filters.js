@@ -85,7 +85,6 @@ class Filters extends Component {
             summit,
             loggedUser,
             base_url,
-            calendarInstructionsUrl,
             history
         } = this.props;
 

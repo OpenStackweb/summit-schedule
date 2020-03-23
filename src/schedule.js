@@ -45,8 +45,8 @@ class Schedule extends Component {
     }
 
     componentDidMount() {
-        const { apiAccessToken, apiUrl, scheduleBase, scheduleUrl, loginRedirectUrl, calendarInstructionsLink, venuesPageLink } = this.props;
-        this.props.loadSession(apiAccessToken, apiUrl, scheduleBase, scheduleUrl, loginRedirectUrl, calendarInstructionsLink, venuesPageLink);
+        const { apiAccessToken, apiUrl, scheduleBase, scheduleUrl, loginRedirectUrl, venuesPageLink } = this.props;
+        this.props.loadSession(apiAccessToken, apiUrl, scheduleBase, scheduleUrl, loginRedirectUrl, venuesPageLink);
     }
 
     componentDidUpdate(prevProps, prevState) {

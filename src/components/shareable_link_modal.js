@@ -53,7 +53,7 @@ class ShareableLinkModal extends Component {
     }
 
     render() {
-        const {hideModal, shareableLink, calendarInstructionsUrl} = this.props;
+        const {hideModal, shareableLink} = this.props;
         const {copied} = this.state;
 
         if (!shareableLink) return null;
@@ -74,7 +74,6 @@ class ShareableLinkModal extends Component {
                                 {breakLink}
                             </a>
                         </p>
-                        <p>Learn more about <a href={calendarInstructionsUrl}>sharing your calendar</a>.</p>
                         <textarea
                             className="copy-link-textarea"
                             defaultValue={shareableLink}
