@@ -354,7 +354,7 @@ export const getSpeakers = () => (dispatch, getState) => {
     }
 
     let params = {
-        expand       : 'member, presentations, presentation.type',
+        expand       : 'member, presentations, presentations.type',
         page         : 1,
         per_page     : 100,
         'filter[]'   : filter,
@@ -378,7 +378,7 @@ export const getSpeaker = (speakerId) => (dispatch, getState) => {
     dispatch(startSchedLoading());
 
     let params = {
-        expand: 'member, presentations, presentation.type'
+        expand: 'member, presentations, presentations.type'
     };
 
     return getRequest(
