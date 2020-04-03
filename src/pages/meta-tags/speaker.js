@@ -14,13 +14,17 @@
 import React from 'react';
 import MetaTags from 'react-meta-tags';
 
-const SpeakerMetaTags = ({speaker}) => (
+const SpeakerMetaTags = ({speaker, summit}) => (
     <MetaTags>
         <meta property="og:title" content={`${speaker.first_name} ${speaker.last_name}`} />
         <meta property="og:url" content="https://devbranch.openstack.org/summit/shanghai-2019/summit-schedule/" />
         <meta property="og:image" content={speaker.pic} />
         <meta property="og:image:secure_url" content={speaker.pic} />
         <meta property="og:description" content={speaker.description} />
+        <meta property="al:ios:url" content={`${summit.schedule_ios_app_custom_schema}://speakers/${event.id}`} />
+        <link rel="alternate" href={`ios-app://${summit.schedule_ios_app_store_id}/${summit.schedule_ios_app_custom_schema}/speakers/${event.id}`} />
+        <meta property="al:android:url" content={`${summit.schedule_android_custom_schema}://speakers/${event.id}`} />
+        <link rel="alternate" href={`android-app://${summit.schedule_android_app_package}/${summit.schedule_android_custom_schema}/speakers/${event.id}`} />
     </MetaTags>
 );
 

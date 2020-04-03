@@ -587,7 +587,7 @@ const defaultErrorHandler = (err, res) => (dispatch, state) => {
     let msg = '';
 
     dispatch(stopSchedLoading());
-    //dispatch(authErrorHandler(err, res));
+    dispatch(authErrorHandler(err, res));
 };
 
 const eventErrorHandler = (err, res) => (dispatch, state) => {
@@ -605,7 +605,7 @@ const eventErrorHandler = (err, res) => (dispatch, state) => {
 
         dispatch(showMessage( error_message, () => dispatch(setDefaultView())));
     } else {
-        //dispatch(authErrorHandler(err, res));
+        dispatch(authErrorHandler(err, res));
     }
 };
 

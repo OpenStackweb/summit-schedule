@@ -28,6 +28,7 @@ import EventMetaTags from "./meta-tags/event";
 import SpeakerBox from "../components/speaker-box";
 
 import "../styles/event-detail.scss";
+import SpeakerMetaTags from "./meta-tags/speaker";
 
 class EventDetailPage extends React.Component {
 
@@ -89,7 +90,7 @@ class EventDetailPage extends React.Component {
 
         return (
             <div className="event-detail-page">
-                <EventMetaTags event={event}/>
+                <EventMetaTags event={event} summit={summit} />
                 <PageHeader
                     title="Event Detail"
                     searchTerm={searchTerm}

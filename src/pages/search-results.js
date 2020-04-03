@@ -18,6 +18,7 @@ import PageHeader from "../components/page-header";
 import {connect} from "react-redux";
 import {setSearch} from "../actions";
 import SpeakerMiniBox from "../components/speaker-mini-box";
+import SearchMetaTags from "./meta-tags/search";
 
 import "../styles/search-results.scss";
 
@@ -39,6 +40,7 @@ class SearchResultsPage extends React.Component {
 
         return (
             <div className="search-results-page">
+                <SearchMetaTags summit={summit} searchTerm={searchTerm} />
                 <PageHeader
                     title="Schedule Results"
                     searchTerm={searchTerm}

@@ -48,7 +48,7 @@ class SpeakerProfilePage extends React.Component {
 
         return (
             <div className="speaker-profile-page">
-                <SpeakerMetaTags speaker={speaker} />
+                <SpeakerMetaTags speaker={speaker} summit={summit} />
                 <PageHeader
                     title="Speaker Details"
                     history={history}

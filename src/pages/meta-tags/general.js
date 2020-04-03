@@ -34,12 +34,8 @@ const GeneralMetaTags = ({summit}) => {
             <meta property="twitter:site" content="@openstack" />
             <meta property="al:ios:app_store_id" content={summit.schedule_ios_app_store_id} />
             <meta property="al:ios:app_name" content={summit.schedule_ios_app_name} />
-            <meta property="al:ios:url" content={summit.schedule_ios_app_custom_schema} />
-            <link rel="alternate" href={`ios-app://${summit.schedule_ios_app_store_id}/${summit.schedule_ios_app_custom_schema}/schedule`} />
             <meta property="al:android:package" content={summit.schedule_android_app_package} />
             <meta property="al:android:app_name" content={summit.schedule_android_app_name} />
-            <meta property="al:android:url" content={summit.schedule_android_custom_schema} />
-            <link rel="alternate" href={`android-app://${summit.schedule_android_app_package}/${summit.schedule_android_custom_schema}/schedule`} />
         </MetaTags>
     );
 }
