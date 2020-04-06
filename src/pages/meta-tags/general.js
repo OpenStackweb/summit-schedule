@@ -36,6 +36,8 @@ const GeneralMetaTags = ({summit}) => {
             <meta property="al:ios:app_name" content={summit.schedule_ios_app_name} />
             <meta property="al:android:package" content={summit.schedule_android_app_package} />
             <meta property="al:android:app_name" content={summit.schedule_android_app_name} />
+            <link id="iosapp" rel="alternate" href="" />
+            <link id="droidapp" rel="alternate" href="" />
         </MetaTags>
     );
 }

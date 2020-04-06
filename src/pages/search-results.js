@@ -36,11 +36,11 @@ class SearchResultsPage extends React.Component {
     }
 
     render() {
-        let {summit, loggedUser, events, speakerResults, filtered, searchTerm, history} = this.props;
+        let {summit, loggedUser, events, speakerResults, filtered, searchTerm, history, absoluteUrl} = this.props;
 
         return (
             <div className="search-results-page">
-                <SearchMetaTags summit={summit} searchTerm={searchTerm} />
+                <SearchMetaTags summit={summit} searchTerm={searchTerm} absoluteUrl={absoluteUrl} />
                 <PageHeader
                     title="Schedule Results"
                     searchTerm={searchTerm}

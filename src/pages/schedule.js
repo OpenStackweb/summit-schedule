@@ -34,11 +34,11 @@ class SchedulePage extends React.Component {
     }
 
     render() {
-        const {summit, history, loggedUser, view, events, filtered, searchTerm, changeView} = this.props;
+        const {summit, history, loggedUser, view, events, filtered, searchTerm, changeView, absoluteUrl} = this.props;
 
         return (
             <div className="schedule-page">
-                <ScheduleMetaTags summit={summit} />
+                <ScheduleMetaTags summit={summit} absoluteUrl={absoluteUrl} />
                 <PageHeader
                     title="Schedule"
                     searchTerm={searchTerm}

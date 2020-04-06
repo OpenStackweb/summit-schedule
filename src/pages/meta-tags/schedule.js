@@ -11,11 +11,11 @@
  * limitations under the License.
  **/
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import MetaTags from 'react-meta-tags';
 import {epochToMomentTimeZone} from "openstack-uicore-foundation/lib/methods";
 
-const ScheduleMetaTags = ({summit}) => {
+const ScheduleMetaTags = ({summit, absoluteUrl}) => {
 
     const summitDesc = `
         Check out the sessions covering over 30+ open source projects with use cases like CI/CD,
@@ -24,17 +24,23 @@ const ScheduleMetaTags = ({summit}) => {
     const summitStart = epochToMomentTimeZone(summit.start_date, summit.time_zone_id).format('MMM D');
     const summitEnd = epochToMomentTimeZone(summit.end_date, summit.time_zone_id).format('D');
 
+    useEffect(() => {
+        const iosapp = document.getElementById('iosapp');
+        const droidapp = document.getElementById('droidapp');
+
+        if (iosapp) iosapp.href = `ios-app://${summit.schedule_ios_app_store_id}/${summit.schedule_ios_app_custom_schema}/schedule`;
+        if (droidapp) droidapp.href = `android-app://${summit.schedule_android_app_package}/${summit.schedule_android_custom_schema}/schedule`;
+    });
+
     return (
         <MetaTags>
-            <meta property="og:title" content={`Join us ${summitStart}-${summitEnd} for the Open Infrastructure Summit ${summit.name}!`} />
-            <meta property="og:url" content="https://devbranch.openstack.org/summit/shanghai-2019/summit-schedule/" />
-            <meta property="og:image" content={summit.schedule_og_image_url} />
-            <meta property="og:image:secure_url" content={summit.schedule_og_image_secure_url} />
-            <meta property="og:description" content={summitDesc} />
-            <meta property="al:ios:url" content={`${summit.schedule_ios_app_custom_schema}://schedule`} />
-            <link rel="alternate" href={`ios-app://${summit.schedule_ios_app_store_id}/${summit.schedule_ios_app_custom_schema}/schedule`} />
-            <meta property="al:android:url" content={`${summit.schedule_android_custom_schema}://schedule`} />
-            <link rel="alternate" href={`android-app://${summit.schedule_android_app_package}/${summit.schedule_android_custom_schema}/schedule`} />
+            <meta id="ogtitle" property="og:title" content={`Join us ${summitStart}-${summitEnd} for the Open Infrastructure Summit ${summit.name}!`} />
+            <meta id="ogurl" property="og:url" content={absoluteUrl} />
+            <meta id="ogimage" property="og:image" content={summit.schedule_og_image_url} />
+            <meta id="ogimagesecure" property="og:image:secure_url" content={summit.schedule_og_image_secure_url} />
+            <meta id="ogdesc" property="og:description" content={summitDesc} />
+            <meta id="aliosurl" property="al:ios:url" content={`${summit.schedule_ios_app_custom_schema}://schedule`} />
+            <meta id="aldroidurl" property="al:android:url" content={`${summit.schedule_android_custom_schema}://schedule`} />
         </MetaTags>
     );
 }

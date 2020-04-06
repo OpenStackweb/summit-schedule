@@ -42,13 +42,13 @@ class SpeakerProfilePage extends React.Component {
     }
 
     render() {
-        const {history, speakerDetail: speaker, summit, loggedUser, searchTerm} = this.props;
+        const {history, speakerDetail: speaker, summit, loggedUser, searchTerm, absoluteUrl} = this.props;
 
         if (!speaker) return(<div/>);
 
         return (
             <div className="speaker-profile-page">
-                <SpeakerMetaTags speaker={speaker} summit={summit} />
+                <SpeakerMetaTags speaker={speaker} summit={summit} absoluteUrl={absoluteUrl} />
                 <PageHeader
                     title="Speaker Details"
                     history={history}

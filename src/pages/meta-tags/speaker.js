@@ -11,21 +11,30 @@
  * limitations under the License.
  **/
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import MetaTags from 'react-meta-tags';
 
-const SpeakerMetaTags = ({speaker, summit}) => (
-    <MetaTags>
-        <meta property="og:title" content={`${speaker.first_name} ${speaker.last_name}`} />
-        <meta property="og:url" content="https://devbranch.openstack.org/summit/shanghai-2019/summit-schedule/" />
-        <meta property="og:image" content={speaker.pic} />
-        <meta property="og:image:secure_url" content={speaker.pic} />
-        <meta property="og:description" content={speaker.description} />
-        <meta property="al:ios:url" content={`${summit.schedule_ios_app_custom_schema}://speakers/${event.id}`} />
-        <link rel="alternate" href={`ios-app://${summit.schedule_ios_app_store_id}/${summit.schedule_ios_app_custom_schema}/speakers/${event.id}`} />
-        <meta property="al:android:url" content={`${summit.schedule_android_custom_schema}://speakers/${event.id}`} />
-        <link rel="alternate" href={`android-app://${summit.schedule_android_app_package}/${summit.schedule_android_custom_schema}/speakers/${event.id}`} />
-    </MetaTags>
-);
+const SpeakerMetaTags = ({speaker, summit, absoluteUrl}) => {
+
+    useEffect(() => {
+        const iosapp = document.getElementById('iosapp');
+        const droidapp = document.getElementById('droidapp');
+
+        if (iosapp) iosapp.href = `ios-app://${summit.schedule_ios_app_store_id}/${summit.schedule_ios_app_custom_schema}/speakers/${speaker.id}`;
+        if (droidapp) droidapp.href = `android-app://${summit.schedule_android_app_package}/${summit.schedule_android_custom_schema}/speakers/${speaker.id}`;
+    });
+
+    return (
+        <MetaTags>
+            <meta id="ogtitle" property="og:title" content={`${speaker.first_name} ${speaker.last_name}`} />
+            <meta id="ogurl" property="og:url" content={`${absoluteUrl}/speakers/${speaker.id}`}  />
+            <meta id="ogimage" property="og:image" content={speaker.pic} />
+            <meta id="ogimagesecure" property="og:image:secure_url" content={speaker.pic} />
+            <meta id="ogdesc" property="og:description" content={speaker.description} />
+            <meta id="aliosurl" property="al:ios:url" content={`${summit.schedule_ios_app_custom_schema}://speakers/${speaker.id}`} />
+            <meta id="aldroidurl" property="al:android:url" content={`${summit.schedule_android_custom_schema}://speakers/${speaker.id}`} />
+        </MetaTags>
+    );
+};
 
 export default SpeakerMetaTags;

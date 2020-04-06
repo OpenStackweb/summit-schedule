@@ -28,7 +28,6 @@ import EventMetaTags from "./meta-tags/event";
 import SpeakerBox from "../components/speaker-box";
 
 import "../styles/event-detail.scss";
-import SpeakerMetaTags from "./meta-tags/speaker";
 
 class EventDetailPage extends React.Component {
 
@@ -65,7 +64,7 @@ class EventDetailPage extends React.Component {
     }
 
     render() {
-        const {eventDetail: event, summit, match, history, searchTerm, venuesUrl} = this.props;
+        const {eventDetail: event, summit, match, history, searchTerm, venuesUrl, absoluteUrl} = this.props;
         const shouldShowVenues = (summit.start_showing_venues_date * 1000) < Date.now();
         const timeZone = summit.time_zone_id;
 
@@ -90,7 +89,7 @@ class EventDetailPage extends React.Component {
 
         return (
             <div className="event-detail-page">
-                <EventMetaTags event={event} summit={summit} />
+                <EventMetaTags event={event} summit={summit} absoluteUrl={absoluteUrl} />
                 <PageHeader
                     title="Event Detail"
                     searchTerm={searchTerm}
