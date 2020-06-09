@@ -141,7 +141,7 @@ export const loadFilters = () => (dispatch, getState) => {
 const setDefaultView = () => (dispatch, getState) => {
     let { summit, schedule_view_defaults } = getState();
     let filterDay = getUrlParam('day');
-    if(filterDay == null ) filterDay = moment().format('YYYY-M-D');
+    if(filterDay == null ) filterDay = moment().format('YYYY-MM-D');
 
     if (!summit.dates.find(d => d.label === filterDay)) {
         filterDay = schedule_view_defaults.day;
