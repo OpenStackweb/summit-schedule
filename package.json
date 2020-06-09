@@ -1,6 +1,6 @@
 {
   "name": "summit-schedule-app",
-  "version": "1.0.18",
+  "version": "1.0.19",
   "description": "Summit Schedule App",
   "main": "./dist/main.js",
   "scripts": {
