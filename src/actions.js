@@ -143,7 +143,7 @@ const setDefaultView = () => (dispatch, getState) => {
     let filterDay = getUrlParam('day');
     if(filterDay == null ) filterDay = moment().format('YYYY-MM-D');
 
-    if (!summit.dates.find(d => d.label === filterDay)) {
+    if (!summit.dates.find(d => d.string === filterDay)) {
         filterDay = schedule_view_defaults.day;
     }
     dispatch(setView('day', filterDay));
