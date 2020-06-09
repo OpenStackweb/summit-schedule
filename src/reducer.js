@@ -112,7 +112,7 @@ const ScheduleReducer = (state = DEFAULT_STATE, action) => {
             summit.month = epochToMomentTimeZone(summit.schedule_start_date, summit.time_zone_id).format('MMMM');
 
             const schedule_view_defaults = {};
-            const schedule_start = epochToMomentTimeZone(summit.schedule_start_date, summit.time_zone_id).format('YYYY-M-D');
+            const schedule_start = summit.schedule_start_date ? epochToMomentTimeZone(summit.schedule_start_date, summit.time_zone_id).format('YYYY-M-D') : null;
             const summit_start = epochToMomentTimeZone(summit.start_date, summit.time_zone_id).format('YYYY-M-D');
             schedule_view_defaults.day = summit.schedule_start_date ? schedule_start : summit_start;
             schedule_view_defaults.track = summit.tracks[0].code;
